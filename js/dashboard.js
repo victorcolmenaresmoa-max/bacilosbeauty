@@ -1,5 +1,5 @@
 // RECUERDA: Coloca tu URL real de SheetDB aquí
-const SHEETDB_URL = "https://api.steinhq.com/v1/storages/6a20ef8392b1163e970155eb";
+const SHEETDB_URL = "https://sheetdb.io/api/v1/i878c8xxrkwtd";
 
 const tableBody = document.getElementById('table-body');
 const refreshBtn = document.getElementById('refresh-btn');
