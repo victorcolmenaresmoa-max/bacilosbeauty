@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Bacilos Beauty</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <h1>Dashboard - Bacilos Beauty 📊</h1>
+        <button id="refresh-btn">Actualizar Citas</button>
+    </header>
+
+    <main class="container dashboard-container">
+        <div class="table-responsive">
+            <table id="appointments-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Clienta</th>
+                        <th>Teléfono</th>
+                        <th>Servicio</th>
+                        <th>Detalles</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="7">Cargando citas...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bacilos Beauty | Agenda tu Cita</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Bacilos Beauty ✨</h1>
+        <p>Reserva tu momento de belleza</p>
+    </header>
+
+    <main class="container">
+        <form id="booking-form" class="card">
+            <h2>Agendar Cita</h2>
+            
+            <div class="form-group">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" required placeholder="Ej. Maria Perez">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono / WhatsApp:</label>
+                <input type="tel" id="telefono" required placeholder="+58 412 1234567">
+            </div>
+
+            <div class="form-group">
+                <label for="fecha">Fecha deseada:</label>
+                <input type="date" id="fecha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hora">Hora:</label>
+                <input type="time" id="hora" required>
+            </div>
+
+            <div class="form-group">
+                <label for="servicio">Servicio Principal:</label>
+                <select id="servicio" required>
+                    <option value="">Selecciona un servicio...</option>
+                    <option value="Uñas - Acrílicas">Uñas - Acrílicas</option>
+                    <option value="Uñas - Semi-permanente">Uñas - Semi-permanente</option>
+                    <option value="Cejas y Pestañas">Cejas y Pestañas</option>
+                    <option value="Cabello - Secado/Planchado">Cabello - Secado/Planchado</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="design-section">
+                <label for="detalles">¿Algún diseño o idea en mente? (Opcional):</label>
+                <textarea id="detalles" rows="3" placeholder="Ej. Francesas con pedrería, efecto espejo..."></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn">Confirmar Cita</button>
+            <p id="status-msg"></p>
+        </form>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
