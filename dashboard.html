@@ -3,34 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Bacilos Beauty</title>
+    <title>Panel de Control | Bacilos Beauty</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="dashboard-body">
-    <header class="dashboard-header">
-        <h1>Dashboard - Bacilos Beauty 📊</h1>
-        <button id="refresh-btn">Actualizar Citas</button>
+<body class="animated-bg">
+    <div class="ambient-light"></div>
+
+    <header class="glass-header admin-header">
+        <div class="header-content">
+            <h1>Bacilos Beauty ✨</h1>
+            <p>Centro de Control y Agendamiento</p>
+        </div>
+        <button id="refresh-btn" class="glow-btn header-btn">↻ Actualizar Datos</button>
     </header>
 
-    <main class="container dashboard-container">
-        <div class="table-responsive">
-            <table id="appointments-table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Clienta</th>
-                        <th>Teléfono</th>
-                        <th>Servicio</th>
-                        <th>Detalles</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                    <tr><td colspan="7">Cargando citas...</td></tr>
-                </tbody>
-            </table>
-        </div>
+    <main class="admin-container">
+        <section class="stats-grid">
+            <div class="stat-card glass-card">
+                <h3>Total Citas</h3>
+                <p id="total-citas" class="stat-number">0</p>
+            </div>
+            <div class="stat-card glass-card">
+                <h3>Pendientes</h3>
+                <p id="citas-pendientes" class="stat-number highlight">0</p>
+            </div>
+            <div class="stat-card glass-card">
+                <h3>Ingresos Estimados</h3>
+                <p class="stat-number">Activo</p>
+            </div>
+        </section>
+
+        <section class="controls-section glass-card">
+            <input type="text" id="search-input" placeholder="🔍 Buscar por nombre o teléfono de clienta..." class="search-bar">
+        </section>
+
+        <section class="table-wrapper glass-card">
+            <h2>Agenda Reciente</h2>
+            <div class="table-responsive">
+                <table class="glass-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha y Hora</th>
+                            <th>Clienta</th>
+                            <th>Contacto</th>
+                            <th>Servicio</th>
+                            <th>Detalles Especiales</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr><td colspan="7" class="loading-text">Conectando con la base de datos... ⏳</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <script src="js/dashboard.js"></script>
