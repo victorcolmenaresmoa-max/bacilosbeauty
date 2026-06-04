@@ -227,20 +227,86 @@ select option {
     font-size: 0.95rem;
 }
 
-/* Responsive */
+/* =========================================
+   ESTILOS DEL LOGO PRINCIPAL
+   ========================================= */
+.glass-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-logo {
+    width: 85px; /* Tamaño perfecto para no robar tanta pantalla */
+    height: 85px;
+    object-fit: cover;
+    border-radius: 50%; /* Lo hace un círculo perfecto */
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px var(--primary-glow);
+    border: 2px solid var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+    transform: scale(1.05);
+}
+
+/* =========================================
+   OPTIMIZACIÓN PROFESIONAL PARA MÓVILES
+   Reemplaza tu @media anterior por este
+   ========================================= */
 @media (max-width: 600px) {
+    .glass-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .brand-logo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .glass-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .container {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    .services-gallery {
+        gap: 1rem; /* Mejor espaciado entre los círculos */
+        margin-bottom: 2rem;
+    }
+
+    .img-wrapper {
+        width: 70px;
+        height: 70px;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+        border-radius: 15px; /* Bordes un poco más suaves en celular */
+    }
+
     .form-row {
         flex-direction: column;
         gap: 0;
     }
-    
-    .glass-card {
-        padding: 1.5rem;
+
+    .form-group {
+        margin-bottom: 1.2rem; /* Separa los campos correctamente */
     }
 
-    .img-wrapper {
-        width: 65px;
-        height: 65px;
+    input, select, textarea {
+        padding: 0.9rem;
+        font-size: 16px; /* TRUCO SENIOR: 16px evita el auto-zoom en iOS/Safari */
+    }
+    
+    .glow-btn {
+        padding: 1rem;
+        font-size: 1rem;
     }
 }
 /* =========================================
