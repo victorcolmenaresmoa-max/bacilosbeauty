@@ -8,8 +8,9 @@ const searchInput = document.getElementById('search-input');
 // Elementos de estadísticas
 const statTotal = document.getElementById('total-citas');
 const statPendientes = document.getElementById('citas-pendientes');
+const statHoy = document.getElementById('citas-hoy'); // Nueva estadística
 
-let allAppointments = []; // Guardamos los datos globalmente para poder filtrarlos
+let allAppointments = [];
 
 async function loadAppointments() {
     tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando información del servidor... ⏳</td></tr>';
@@ -20,11 +21,10 @@ async function loadAppointments() {
         
         if (data.length === 0 || data.error) {
             tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hay citas agendadas aún.</td></tr>';
-            updateStats(0, 0);
+            updateStats(0, 0, 0);
             return;
         }
 
-        // Limpiar datos vacíos y ordenar por fecha (más recientes o próximas primero)
         allAppointments = data.filter(cita => cita.nombre_clienta);
         allAppointments.sort((a, b) => new Date(a.fecha_cita) - new Date(b.fecha_cita));
 
@@ -32,7 +32,15 @@ async function loadAppointments() {
         
         // Calcular estadísticas
         const pendientes = allAppointments.filter(cita => cita.estado.toLowerCase() === 'pendiente').length;
-        updateStats(allAppointments.length, pendientes);
+        
+        // Calcular cuántas citas son para la fecha de hoy
+        const fechaHoy = new Date().toLocaleDateString('es-ES', { timeZone: 'UTC' });
+        const citasHoy = allAppointments.filter(cita => {
+            const fechaCita = new Date(cita.fecha_cita).toLocaleDateString('es-ES', { timeZone: 'UTC' });
+            return fechaCita === fechaHoy;
+        }).length;
+
+        updateStats(allAppointments.length, pendientes, citasHoy);
 
     } catch (error) {
         console.error('Error cargando los datos:', error);
@@ -51,12 +59,14 @@ function renderTable(data) {
     data.forEach(cita => {
         const row = document.createElement('tr');
         
-        // Formatear fecha para que se vea más bonita (Ej: 15/08/2026)
         const dateObj = new Date(cita.fecha_cita);
         const fechaFormateada = dateObj.toLocaleDateString('es-ES', { timeZone: 'UTC' });
-
-        // Limpiar el teléfono para el enlace de WhatsApp (quitar espacios y signos)
         const phoneLink = cita.telefono ? cita.telefono.replace(/\D/g,'') : '';
+
+        // Lógica visual del estado (Amarillo o Verde)
+        let isContactado = cita.estado.toLowerCase() === 'contactado';
+        let badgeClass = isContactado ? 'status-contacted' : 'status-pending';
+        let textoEstado = isContactado ? 'Contactado' : 'Pendiente';
 
         row.innerHTML = `
             <td>
@@ -68,11 +78,11 @@ function renderTable(data) {
             <td style="color:var(--primary-color); font-weight:500;">${cita.servicio}</td>
             <td style="font-size:0.85rem; max-width:200px;">${cita.detalles_diseno || '-'}</td>
             <td>
-                <span class="status-badge status-pending">${cita.estado || 'Pendiente'}</span>
+                <span id="badge-${cita.id}" class="status-badge ${badgeClass}">${textoEstado}</span>
             </td>
             <td>
                 <a href="https://wa.me/${phoneLink}?text=Hola%20${cita.nombre_clienta},%20te%20escribimos%20de%20Bacilos%20Beauty%20para%20confirmar%20tu%20cita." 
-                   target="_blank" class="action-btn">
+                   target="_blank" class="action-btn" onclick="marcarContactado(this, '${cita.id}')">
                    💬 Contactar
                 </a>
             </td>
@@ -81,13 +91,41 @@ function renderTable(data) {
     });
 }
 
-function updateStats(total, pendientes) {
-    // Animación suave de los números
+function updateStats(total, pendientes, hoy) {
     statTotal.innerText = total;
     statPendientes.innerText = pendientes;
+    statHoy.innerText = hoy; // Actualiza el número de citas de hoy
 }
 
-// Lógica de búsqueda en tiempo real
+// NUEVA FUNCIÓN: Cambia a verde en la pantalla y actualiza en SheetDB
+async function marcarContactado(btnElement, citaId) {
+    // 1. Cambiar visualmente al instante para dar feedback rápido
+    const badge = document.getElementById(`badge-${citaId}`);
+    if (badge) {
+        badge.className = 'status-badge status-contacted';
+        badge.innerText = 'Contactado';
+    }
+
+    // 2. Enviar actualización silenciosa a la base de datos (SheetDB)
+    try {
+        await fetch(`${SHEETDB_URL}/id/${citaId}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                data: {
+                    estado: "Contactado"
+                }
+            })
+        });
+        console.log(`Cita ${citaId} actualizada a Contactado en la base de datos.`);
+    } catch (error) {
+        console.error("Error al guardar el estado en la hoja de cálculo:", error);
+    }
+}
+
 searchInput.addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
     const filteredData = allAppointments.filter(cita => {
@@ -98,9 +136,8 @@ searchInput.addEventListener('input', (e) => {
     renderTable(filteredData);
 });
 
-// Cargar al inicio y asignar botón
 document.addEventListener('DOMContentLoaded', loadAppointments);
 refreshBtn.addEventListener('click', () => {
-    searchInput.value = ''; // Limpiar buscador al recargar
+    searchInput.value = ''; 
     loadAppointments();
 });
