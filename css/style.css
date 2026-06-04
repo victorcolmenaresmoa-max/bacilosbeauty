@@ -478,4 +478,87 @@ select option {
         gap: 1rem;
         text-align: center;
     }
+
+    /* =========================================
+       MAGIA SENIOR: TABLA A TARJETAS EN MÓVIL
+       ========================================= */
+    .table-responsive {
+        overflow-x: hidden; /* Apaga el scroll horizontal */
+    }
+
+    .glass-table thead {
+        display: none; /* Escondemos los títulos de arriba */
+    }
+
+    .glass-table, .glass-table tbody, .glass-table tr, .glass-table td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Cada fila ahora es una tarjeta independiente */
+    .glass-table tr {
+        margin-bottom: 1.5rem;
+        background: rgba(0, 0, 0, 0.2); 
+        border: 1px solid var(--glass-border);
+        border-radius: 15px;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Reestructuramos las celdas */
+    .glass-table td {
+        position: relative;
+        padding: 0.8rem 0 0.8rem 45%; /* Deja 45% de espacio a la izquierda para el título */
+        text-align: right; /* El texto se alinea a la derecha */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        min-height: 45px;
+    }
+
+    /* Inyectamos los títulos de las columnas usando CSS (sin tocar el HTML) */
+    .glass-table td::before {
+        position: absolute;
+        left: 0;
+        top: 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        text-align: left;
+    }
+
+    /* Asignamos el título correcto a cada línea */
+    .glass-table td:nth-child(1)::before { content: "Fecha y Hora"; }
+    .glass-table td:nth-child(2)::before { content: "Clienta"; }
+    .glass-table td:nth-child(3)::before { content: "Contacto"; }
+    .glass-table td:nth-child(4)::before { content: "Servicio"; }
+    
+    /* El campo de detalles necesita más espacio por si escriben mucho */
+    .glass-table td:nth-child(5) {
+        padding-left: 0;
+        text-align: left;
+        padding-top: 2.2rem;
+    }
+    .glass-table td:nth-child(5)::before {
+        top: 0.8rem;
+        content: "Detalles del Diseño";
+    }
+
+    .glass-table td:nth-child(6)::before { content: "Estado"; }
+
+    /* El botón final ocupa toda la tarjeta y no necesita título */
+    .glass-table td:last-child {
+        padding-left: 0;
+        text-align: center;
+        border-bottom: none;
+        padding-bottom: 0.5rem;
+    }
+    .glass-table td:last-child::before {
+        display: none; 
+    }
+
+    .action-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+        padding: 0.8rem;
+    }
 }
