@@ -333,7 +333,7 @@ select option {
 }
 
 .admin-container {
-    max-width: 1200px;
+    max-width: 95%; /* Cambiamos 1200px por 95% para que ocupe casi toda la pantalla */
     margin: 2rem auto;
     padding: 0 1.5rem;
     display: flex;
@@ -444,6 +444,12 @@ select option {
     background: rgba(255, 193, 7, 0.2);
     color: #ffc107;
     border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.status-contacted {
+    background: rgba(37, 211, 102, 0.2);
+    color: #25D366; /* Verde tipo WhatsApp */
+    border: 1px solid rgba(37, 211, 102, 0.4);
 }
 
 /* Botones de acción en tabla */
