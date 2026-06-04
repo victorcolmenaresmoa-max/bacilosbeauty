@@ -6,40 +6,74 @@
     <title>Bacilos Beauty | Agenda tu Cita</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <header>
+<body class="animated-bg">
+    <div class="ambient-light"></div>
+    
+    <header class="glass-header">
         <h1>Bacilos Beauty ✨</h1>
-        <p>Reserva tu momento de belleza</p>
+        <p>Reserva tu momento de elegancia</p>
     </header>
 
     <main class="container">
-        <form id="booking-form" class="card">
+        
+        <section class="services-gallery">
+            <div class="service-item" onclick="selectService('Cejas y Pestañas')">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?w=300&h=300&fit=crop" alt="Cejas">
+                </div>
+                <span>Cejas</span>
+            </div>
+            <div class="service-item" onclick="selectService('Cejas y Pestañas')">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1588665799797-2a41d0637c22?w=300&h=300&fit=crop" alt="Pestañas">
+                </div>
+                <span>Pestañas</span>
+            </div>
+            <div class="service-item" onclick="selectService('Uñas - Acrílicas')">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=300&h=300&fit=crop" alt="Uñas Manos">
+                </div>
+                <span>Manos</span>
+            </div>
+            <div class="service-item" onclick="selectService('Uñas - Semi-permanente')">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?w=300&h=300&fit=crop" alt="Uñas Pies">
+                </div>
+                <span>Pies</span>
+            </div>
+        </section>
+
+        <form id="booking-form" class="glass-card">
             <h2>Agendar Cita</h2>
             
-            <div class="form-group">
-                <label for="nombre">Nombre completo:</label>
-                <input type="text" id="nombre" required placeholder="Ej. Maria Perez">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" required placeholder="Ej. Maria Perez">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono / WhatsApp:</label>
+                    <input type="tel" id="telefono" required placeholder="+58 412 1234567">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="telefono">Teléfono / WhatsApp:</label>
-                <input type="tel" id="telefono" required placeholder="+58 412 1234567">
-            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fecha">Fecha deseada:</label>
+                    <input type="date" id="fecha" required>
+                </div>
 
-            <div class="form-group">
-                <label for="fecha">Fecha deseada:</label>
-                <input type="date" id="fecha" required>
-            </div>
-
-            <div class="form-group">
-                <label for="hora">Hora:</label>
-                <input type="time" id="hora" required>
+                <div class="form-group">
+                    <label for="hora">Hora:</label>
+                    <input type="time" id="hora" required>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="servicio">Servicio Principal:</label>
                 <select id="servicio" required>
-                    <option value="">Selecciona un servicio...</option>
+                    <option value="" disabled selected>Selecciona un servicio o toca una imagen arriba...</option>
                     <option value="Uñas - Acrílicas">Uñas - Acrílicas</option>
                     <option value="Uñas - Semi-permanente">Uñas - Semi-permanente</option>
                     <option value="Cejas y Pestañas">Cejas y Pestañas</option>
@@ -52,11 +86,27 @@
                 <textarea id="detalles" rows="3" placeholder="Ej. Francesas con pedrería, efecto espejo..."></textarea>
             </div>
 
-            <button type="submit" id="submit-btn">Confirmar Cita</button>
+            <button type="submit" id="submit-btn" class="glow-btn">Confirmar Cita</button>
             <p id="status-msg"></p>
         </form>
     </main>
 
     <script src="js/main.js"></script>
+    <script>
+        // Script adicional para UX Senior: Seleccionar servicio al tocar imagen
+        function selectService(serviceValue) {
+            const selectElement = document.getElementById('servicio');
+            selectElement.value = serviceValue;
+            
+            // Animación suave de scroll hacia el formulario
+            document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Efecto visual en el select para indicar que cambió
+            selectElement.style.boxShadow = "0 0 15px var(--primary-color)";
+            setTimeout(() => {
+                selectElement.style.boxShadow = "none";
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
