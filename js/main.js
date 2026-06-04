@@ -1,5 +1,5 @@
 // URL de la API de SheetDB
-const SHEETDB_URL = "https://api.steinhq.com/v1/storages/6a20ef8392b1163e970155eb";
+const SHEETDB_URL = "https://sheetdb.io/api/v1/i878c8xxrkwtd";
 
 const form = document.getElementById('booking-form');
 const statusMsg = document.getElementById('status-msg');
